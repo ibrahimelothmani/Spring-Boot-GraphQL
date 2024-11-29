@@ -1,0 +1,51 @@
+type User {
+    id: ID!
+    name: String!
+    password: String!
+    email: String!
+    cars: [Car!] # A theUser can own multiple cars
+}
+
+type Car {
+    id: ID!
+    make: String!
+    model: String!
+    owner: User # A car belongs to one theUser
+}
+
+input UserInput {
+    name: String!
+    password: String!
+    email: String!
+}
+
+input UserUpdateInput {
+    name: String
+    password: String
+    email: String
+}
+
+input CarInput {
+    make: String!
+    model: String!
+    ownerId: ID!
+}
+
+input UserFilterInput {
+    name: String
+    email: String
+}
+
+type Mutation {
+    createUser(input: UserInput): User!
+    updateUser(id: ID!, input: UserUpdateInput): User!
+    createCar(input: CarInput): Car!
+    updateCar(id: ID!, input: CarInput): Car!
+}
+
+type Query {
+    users(filter: UserFilterInput): [User]!
+    theUser(id: ID!): User!
+    cars: [Car]!
+    car(id: ID!): Car!
+}
